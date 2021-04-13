@@ -12,17 +12,31 @@ import com.dto.VilleFrance;
 public class VilleBloImpl implements VilleBlo {
 
 	@Autowired
-	private VilleDao villeDAO;
+	private VilleDao villeDao;
 
-	public ArrayList<VilleFrance> getInfoVille(String monParam) {
+	@Override
+	public ArrayList<VilleFrance> getInfoVille(String codePostal, String nom) {
 		ArrayList<VilleFrance> listeVille = null;
 
-		if (monParam == null) {
-			listeVille = villeDAO.findAllVilles();
-		} else {
-			listeVille = villeDAO.getVilleByCodePostal(monParam);
+		if (codePostal == null && nom == null) {
+			listeVille = villeDao.listeVilles();
+		}
+		else if(nom != null) {
+			listeVille = villeDao.getVilleNom(nom);
+		}
+		else {
+			listeVille = villeDao.getVilleCodePostal(codePostal);
 		}
 		return listeVille;
+	}
+
+	@Override
+	public String getVilles() {
+		String chaine = "";
+		for (VilleFrance ville : villeDao.listeVilles()) {
+			chaine += "<p> " + ville.toString() + " </p>";
+		}
+		return chaine;
 	}
 
 }

@@ -8,30 +8,70 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.config.JDBCConfig;
+import com.config.JDBCconfig;
 import com.dto.VilleFrance;
 
 @Service
 public class VilleDaoImpl implements VilleDao {
+	
+	public ArrayList<VilleFrance> listeVilles() {
+		ArrayList<VilleFrance> villes = new ArrayList<VilleFrance>();
+		Connection connexion = new JDBCconfig().getConnexion();
 
-	public ArrayList<VilleFrance> findAllVilles() {
-		ArrayList<VilleFrance> liste = new ArrayList<VilleFrance>();
-
-		Connection con = new JDBCConfig().getCo();
 		try {
-			Statement st = con.createStatement();
-			ResultSet resultat = st.executeQuery("SELECT * FROM ville_france;");
+			Statement statement = connexion.createStatement();
+			ResultSet resultat = statement.executeQuery("SELECT * FROM ville_france;");
+
 			while (resultat.next()) {
-				VilleFrance ville = new VilleFrance(resultat.getString(1), resultat.getString(2), resultat.getString(3),
-						resultat.getString(4), resultat.getString(6), resultat.getString(7));
-				liste.add(ville);
+				VilleFrance ville = new VilleFrance();
+				ville.setNom(resultat.getString("Nom_commune"));
+				ville.setInsee(resultat.getString("Code_commune_INSEE"));
+				ville.setCode_p(resultat.getString("Code_Postal"));
+				ville.setLatitude(resultat.getString("Latitude"));
+				ville.setLongitude(resultat.getString("Longitude"));
+
+				villes.add(ville);
 			}
-			return liste;
+			return villes;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				con.close();
+				connexion.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<VilleFrance> getVilleNom(String nom) {
+		ArrayList<VilleFrance> villes = new ArrayList<VilleFrance>();
+		Connection connexion = null;
+		Statement statement = null;
+		ResultSet resultat = null;
+
+		try {
+			connexion = new JDBCconfig().getConnexion();
+			statement = connexion.createStatement();
+			resultat = statement.executeQuery("SELECT * FROM ville_france WHERE Nom_commune LIKE '%" + nom + "%';");
+
+			while (resultat.next()) {
+				VilleFrance ville = new VilleFrance();
+				ville.setNom(resultat.getString("Nom_commune"));
+				ville.setInsee(resultat.getString("Code_commune_INSEE"));
+				ville.setCode_p(resultat.getString("Code_Postal"));
+				ville.setLatitude(resultat.getString("Latitude"));
+				ville.setLongitude(resultat.getString("Longitude"));
+
+				villes.add(ville);
+			}
+			return villes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connexion.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -39,24 +79,33 @@ public class VilleDaoImpl implements VilleDao {
 		return null;
 	}
 
-	public ArrayList<VilleFrance> getVilleByCodePostal(String code) {
-		ArrayList<VilleFrance> liste = new ArrayList<VilleFrance>();
-		Connection con = new JDBCConfig().getCo();
+	public ArrayList<VilleFrance> getVilleCodePostal(String codePostal) {
+		ArrayList<VilleFrance> villes = new ArrayList<VilleFrance>();
+		Connection connexion = null;
+		Statement statement = null;
+		ResultSet resultat = null;
 
 		try {
-			Statement st = con.createStatement();
-			ResultSet resultat = st.executeQuery("SELECT * FROM ville_france WHERE Code_postal='" + code + "';");
+			connexion = new JDBCconfig().getConnexion();
+			statement = connexion.createStatement();
+			resultat = statement.executeQuery("SELECT * FROM ville_france WHERE Code_postal = " + codePostal + ";");
+
 			while (resultat.next()) {
-				VilleFrance ville = new VilleFrance(resultat.getString(1), resultat.getString(2), resultat.getString(3),
-						resultat.getString(4), resultat.getString(6), resultat.getString(7));
-				liste.add(ville);
+				VilleFrance ville = new VilleFrance();
+				ville.setNom(resultat.getString("Nom_commune"));
+				ville.setInsee(resultat.getString("Code_commune_INSEE"));
+				ville.setCode_p(resultat.getString("Code_Postal"));
+				ville.setLatitude(resultat.getString("Latitude"));
+				ville.setLongitude(resultat.getString("Longitude"));
+
+				villes.add(ville);
 			}
-			return liste;
+			return villes;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				con.close();
+				connexion.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

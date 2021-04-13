@@ -16,13 +16,17 @@ import com.dto.VilleFrance;
 public class VilleController {
 
 	@Autowired
-	VilleBlo villeBLOService;
+	VilleBlo villeBlo;
 
 	// Méthode GET
 	@RequestMapping(value = "/ville", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<VilleFrance> appelGet(@RequestParam(required = false, value = "codePostal") String codePostal) {
+	public ArrayList<VilleFrance> appelGet(@RequestParam(required = false, value = "codePostal") String codePostal,
+			@RequestParam(required = false, value = "nom") String nom) {
 		System.out.println("Appel GET");
-		return villeBLOService.getInfoVille(codePostal);
+		System.out.println("Code postal : " + codePostal);
+		System.out.println("Nom : " + nom);
+
+		return villeBlo.getInfoVille(codePostal, nom);
 	}
 }
