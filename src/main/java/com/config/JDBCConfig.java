@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JDBCConfiguration {
+public class JDBCConfig {
 
 	private Connection co;
 
-	public JDBCConfiguration() {
+	public JDBCConfig() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {

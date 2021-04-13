@@ -8,21 +8,21 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.config.JDBCConfiguration;
-import com.dto.Ville;
+import com.config.JDBCConfig;
+import com.dto.VilleFrance;
 
 @Service
-public class VilleDAOImpl implements VilleDAO {
+public class VilleDaoImpl implements VilleDao {
 
-	public ArrayList<Ville> findAllVilles() {
-		ArrayList<Ville> liste = new ArrayList<Ville>();
+	public ArrayList<VilleFrance> findAllVilles() {
+		ArrayList<VilleFrance> liste = new ArrayList<VilleFrance>();
 
-		Connection con = new JDBCConfiguration().getCo();
+		Connection con = new JDBCConfig().getCo();
 		try {
 			Statement st = con.createStatement();
 			ResultSet resultat = st.executeQuery("SELECT * FROM ville_france;");
 			while (resultat.next()) {
-				Ville ville = new Ville(resultat.getString(1), resultat.getString(2), resultat.getString(3),
+				VilleFrance ville = new VilleFrance(resultat.getString(1), resultat.getString(2), resultat.getString(3),
 						resultat.getString(4), resultat.getString(6), resultat.getString(7));
 				liste.add(ville);
 			}
@@ -39,15 +39,15 @@ public class VilleDAOImpl implements VilleDAO {
 		return null;
 	}
 
-	public ArrayList<Ville> getVilleByCodePostal(String code) {
-		ArrayList<Ville> liste = new ArrayList<Ville>();
-		Connection con = new JDBCConfiguration().getCo();
+	public ArrayList<VilleFrance> getVilleByCodePostal(String code) {
+		ArrayList<VilleFrance> liste = new ArrayList<VilleFrance>();
+		Connection con = new JDBCConfig().getCo();
 
 		try {
 			Statement st = con.createStatement();
 			ResultSet resultat = st.executeQuery("SELECT * FROM ville_france WHERE Code_postal='" + code + "';");
 			while (resultat.next()) {
-				Ville ville = new Ville(resultat.getString(1), resultat.getString(2), resultat.getString(3),
+				VilleFrance ville = new VilleFrance(resultat.getString(1), resultat.getString(2), resultat.getString(3),
 						resultat.getString(4), resultat.getString(6), resultat.getString(7));
 				liste.add(ville);
 			}

@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dao.VilleDAO;
-import com.dto.Ville;
+import com.dao.VilleDao;
+import com.dto.VilleFrance;
 
 @Service
-public class VilleBLOImpl implements VilleBLO {
+public class VilleBloImpl implements VilleBlo {
 
 	@Autowired
-	private VilleDAO villeDAO;
+	private VilleDao villeDAO;
 
-	public ArrayList<Ville> getInfoVille(String monParam) {
-		ArrayList<Ville> listeVille = null;
+	public ArrayList<VilleFrance> getInfoVille(String monParam) {
+		ArrayList<VilleFrance> listeVille = null;
 
 		if (monParam == null) {
 			listeVille = villeDAO.findAllVilles();

@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blo.VilleBLO;
-import com.dto.Ville;
+import com.blo.VilleBlo;
+import com.dto.VilleFrance;
 
 @RestController
 public class VilleController {
 
 	@Autowired
-	VilleBLO villeBLOService;
+	VilleBlo villeBLOService;
 
 	// Méthode GET
 	@RequestMapping(value = "/ville", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<Ville> appelGet(@RequestParam(required = false, value = "codePostal") String codePostal) {
+	public ArrayList<VilleFrance> appelGet(@RequestParam(required = false, value = "codePostal") String codePostal) {
 		System.out.println("Appel GET");
 		return villeBLOService.getInfoVille(codePostal);
 	}

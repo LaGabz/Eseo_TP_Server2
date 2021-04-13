@@ -1,6 +1,6 @@
 package com.dto;
 
-public class Ville {
+public class VilleFrance {
 
 	private String insee;
 	private String nom;
@@ -9,7 +9,7 @@ public class Ville {
 	private String latitude;
 	private String longitude;
 
-	public Ville(String insee, String nom, String code, String libelle, String lat, String longi) {
+	public VilleFrance(String insee, String nom, String code, String libelle, String lat, String longi) {
 		this.insee = insee;
 		this.nom = nom;
 		this.codePostal = code;
